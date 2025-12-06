@@ -16,7 +16,7 @@ class SokobanState:
         if pos in self.boxes:
             return False
         return True
-
+    
     def move_player(self, direction):
         dx, dy = direction
         nx = self.player_position[0] + dx
@@ -24,19 +24,41 @@ class SokobanState:
         new_pos = (nx, ny)
 
         if new_pos in self.walls:
-            return
+            return False
 
         if new_pos in self.boxes:
             box_new = (nx + dx, ny + dy)
+
             if self.is_free(box_new):
                 self.boxes.remove(new_pos)
                 self.boxes.add(box_new)
                 self.player_position = new_pos
+                return True 
+            return False
         else:
             self.player_position = new_pos
+            return True
 
     def is_solved(self):
         return self.targets.issubset(self.boxes)
+
+
+
+    # CREATES CLONE OF THE SOKOBAN MAP SO A* CAN RUN SIMULATIONS WITHOUT ACTUALLY PLAYING THE GAME ON THE GUI
+    def clone(self):
+        return SokobanState(
+            self.walls,
+            self.targets,
+            self.boxes,
+            self.player_position
+        )
+
+    # RETURNS THE PLAYERS POSITION AND THE POSITION OF THE BOXES SO IT KNOWS WHERE IT HAS BEEN BEFORE
+    def get_snapshot_of_boxes_and_player(self):
+        list_of_boxes = list(self.boxes)
+        list_of_boxes.sort()
+        return (self.player_position, tuple(list_of_boxes))
+
 
 
 def parse_level(layout):
@@ -63,5 +85,7 @@ def parse_level(layout):
             elif c == '+':      # player on target
                 player_position = pos
                 targets.add(pos)
+                
+
 
     return SokobanState(walls, targets, boxes, player_position)
