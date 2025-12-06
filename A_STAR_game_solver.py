@@ -1,10 +1,11 @@
 import heapq
+from itertools import permutations
 
 POSSIBLE_MOVES = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
 
 # USES SUM OF MANHATTAN DISTANCES FROM EVERY BOX TO THE CLOEST TARGET POSITION
-def heuristic(state):
+def heuristic_baseline(state):
     total_dist = 0
     for box in state.boxes:
         min_dist = float('inf')
@@ -15,6 +16,25 @@ def heuristic(state):
         total_dist += min_dist
     return total_dist
 
+def heuristic_matching(state):
+    boxes = list(state.boxes)
+    targets = list(state.targets)
+
+    if not boxes:
+        return 0
+    best_total = float('inf')
+
+    # try all box->target pairings and take the minimum total distance
+    for perm in permutations(targets, len(boxes)):
+        total = 0
+        for (boxX, boxY), (targetX, targetY) in zip(boxes, perm):
+            total += abs(boxX - targetX) + abs(boxY - targetY)
+            if total >= best_total:
+                break
+        if total < best_total:
+            best_total = total
+
+    return best_total
 
 # CHECKS IF A BOX IS STUCK IN A CORNER
 def is_deadlock(state):
@@ -34,6 +54,10 @@ def is_deadlock(state):
             
     return False
 
+# Choose which heuristic to use
+heuristic = heuristic_baseline
+#heuristic = heuristic_matching
+
 def solve_using_A_STAR(starting_board_layout):
     
     initial_board = starting_board_layout
@@ -46,13 +70,20 @@ def solve_using_A_STAR(starting_board_layout):
     
     AI_visited_snapshots  = set()
     
-    
     AI_visited_snapshots.add(start_snapshot)
+    
+    expanded_states = 0
 
     while AI_potential_game_states:
         total_cost, backward_cost, _, current_state, path = heapq.heappop(AI_potential_game_states)
 
+        expanded_states += 1
+
         if current_state.is_solved():
+            print(
+                f"[{heuristic.__name__}] Expanded states: {expanded_states}, "
+                f"solution length: {len(path)}"
+            )
             return path
 
         for move in POSSIBLE_MOVES:
