@@ -4,7 +4,7 @@ from config import WINDOW_WIDTH, WINDOW_HEIGHT, LEVEL_LAYOUT, AI_DELAY
 from state import parse_level
 from renderer import draw_grid, init_renderer
 from input_handler import handle_input
-from solver import solve_using_A_STAR
+from A_STAR_game_solver import solve_using_A_STAR
 
 def main():
     pygame.init()
