@@ -1,7 +1,8 @@
 # Configuration settings for the Sokoban game 
 # Tile and grid dimensions
+from levels import *
 
-TILE_SIZE = 40
+TILE_SIZE = 60
 GRID_WIDTH = 7
 GRID_HEIGHT = 8
 
@@ -25,15 +26,4 @@ ASSET_PATHS = {
 
 
 
-LEVEL_LAYOUT = [
-    "######",
-    "#. ..#",
-    "#  $.#",
-    "##  $##",
-    " #  $ #",
-    " #$## #",
-    " # @  #",
-    " ######"       
-    
-    
-]
+LEVEL_LAYOUT = LEVEL_5

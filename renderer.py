@@ -62,5 +62,5 @@ def draw_grid(surface, state, font, solved):
     playerx, playery = state.player_position
     surface.blit(sprite_manager.get("player"), (playerx * TILE_SIZE, playery * TILE_SIZE))
 
-    msg = "Solved!" if solved else "Arrow keys to move."
-    surface.blit(font.render(msg, True, TEXT_COLOR), (10, 10))
+    msg = "Solved! R: reset | S: A* solve" if solved else "Arrows: move | R: reset | S: A* solve"
+    surface.blit(font.render(msg, True, TEXT_COLOR), (GRID_WIDTH * TILE_SIZE // 2 - font.size(msg)[0] // 2, 10))
