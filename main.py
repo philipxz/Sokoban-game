@@ -4,7 +4,7 @@ from config import WINDOW_WIDTH, WINDOW_HEIGHT, LEVEL_LAYOUT, AI_DELAY
 from state import parse_level
 from renderer import draw_grid, init_renderer
 from input_handler import handle_input
-from solver import solve_sokoban
+from solver import solve_using_A_STAR
 
 def main():
     pygame.init()
@@ -47,7 +47,7 @@ def main():
                 pygame.display.flip()
                 
                 # RUNS AI SOLVER
-                path = solve_sokoban(sokoban_state)
+                path = solve_using_A_STAR(sokoban_state)
                 AI_is_solving = False
                 if path:
                     AI_solution_path = path
