@@ -4,7 +4,7 @@ from config import WINDOW_WIDTH, WINDOW_HEIGHT, LEVEL_LAYOUT, AI_DELAY
 from state import parse_level
 from renderer import draw_grid, init_renderer
 from input_handler import handle_input
-from A_STAR_game_solver import solve_using_A_STAR
+from A_STAR_game_solver import solve_using_A_STAR, heuristic_manhattan, heuristic_matching, heuristic_hungarian, solve_using_UCS, heuristic_ucs, heuristic_min_pushes
 
 def main():
     pygame.init()
@@ -47,13 +47,13 @@ def main():
                 pygame.display.flip()
                 
                 # RUNS AI SOLVER
-                path = solve_using_A_STAR(sokoban_state)
+                path, solution_count = solve_using_A_STAR(sokoban_state, heuristic_min_pushes)
                 AI_is_solving = False
                 if path:
                     AI_solution_path = path
-                    print(f"Solution found! {len(path)} steps.")
+                    print(f"Solution found! {len(path)} steps. (Expanded {solution_count} states)")
                 else:
-                    print("No solution found.")
+                    print(f"No solution found. (Expanded {solution_count} states)")
 
         # DISPLAYS AI SOLVERS PATH STEP BY STEP IN GUI
         if len(AI_solution_path) != 0:
