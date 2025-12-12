@@ -18,12 +18,14 @@ The solver is designed to solve small to medium difficulty Sokoban levels
   From the project directory, run: 
   python heuristic_test.py
 
-### Player Controls
-Key	        |  Action
-Arrow Keys	|  Move player
-S	          |  Run A* solver
-R	          |  Reset level
-ESC	        |  Quit
+## Player Controls
+
+| Key        | Action            |
+|------------|-------------------|
+| Arrow Keys | Move player       |
+| S          | Run A* solver     |
+| R          | Reset level       |
+| ESC        | Quit              |
 
 ---
 
