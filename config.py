@@ -2,9 +2,11 @@
 # Tile and grid dimensions
 from levels import *
 
+LEVEL_LAYOUT = LEVEL_13
+
 TILE_SIZE = 60
-GRID_WIDTH = 7
-GRID_HEIGHT = 8
+GRID_HEIGHT = len(LEVEL_LAYOUT)
+GRID_WIDTH = max(len(row) for row in LEVEL_LAYOUT)
 
 WINDOW_WIDTH = GRID_WIDTH * TILE_SIZE
 WINDOW_HEIGHT = GRID_HEIGHT * TILE_SIZE
@@ -25,5 +27,3 @@ ASSET_PATHS = {
 }
 
 
-
-LEVEL_LAYOUT = LEVEL_5
